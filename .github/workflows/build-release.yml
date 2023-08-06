@@ -28,7 +28,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: concatenated_list.txt
-        name: Automatic list generation
+        name: Concatenated list generation
         tag_name: ${{ env.TAG_NAME }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
