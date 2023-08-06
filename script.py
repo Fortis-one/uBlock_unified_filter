@@ -15,11 +15,22 @@ for group in response_json:
         else:
             list_of_urls.append(response_json[group]["cdnURLs"][0])
 
+prev_list = requests.get("https://raw.githubusercontent.com/Fortis-one/filtrite/main/lists/list.txt").text
+prev_list = prev_list.split('\n')
+
+for url in prev_list:
+    if url not in list_of_urls and url != "":
+        list_of_urls.append(url)
+
 concat_list = ""
 
 for url in list_of_urls:
-    concat_list += requests.get(url).text
-    concat_list += "\n\n\n"
+    try:
+        response = requests.get(url).text
+    except Exception as e:
+        print(url, " failed with exception: ", e)
+    finally:
+        concat_list += response + "\n\n\n"
 
 with open("concatenated_list.txt", 'w') as file:
     file.write(concat_list)
